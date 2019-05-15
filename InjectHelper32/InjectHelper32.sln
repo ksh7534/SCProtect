@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InjectHelper32", "InjectHelper32\InjectHelper32.vcxproj", "{39D2BB21-AF92-40E0-A541-A7B875EEF5F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39D2BB21-AF92-40E0-A541-A7B875EEF5F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{39D2BB21-AF92-40E0-A541-A7B875EEF5F8}.Debug|Win32.Build.0 = Debug|Win32
+		{39D2BB21-AF92-40E0-A541-A7B875EEF5F8}.Release|Win32.ActiveCfg = Release|Win32
+		{39D2BB21-AF92-40E0-A541-A7B875EEF5F8}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E960C28-5ADF-4D99-8558-00F2693E2F43}
+	EndGlobalSection
+EndGlobal
