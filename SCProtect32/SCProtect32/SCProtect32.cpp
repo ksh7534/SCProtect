@@ -38,68 +38,66 @@ extern "C" __declspec(dllexport) BOOL uninstallGlobalHook()
 BOOL installHk(const char* dllName, const char* apiName, DWORD addr, char *originalCode)
 {
 	DWORD dwOldProtect;
-    DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
-    if (apiAddr == NULL)
-        return FALSE;
-    BYTE *pbTargetCode = (BYTE *) apiAddr;
-    BYTE *pbReplaced = (BYTE *) addr;
-    VirtualProtect((void *) apiAddr, 5, PAGE_EXECUTE_READWRITE, &dwOldProtect);
-    memcpy(originalCode, pbTargetCode, 5);
-    *pbTargetCode++ = 0xE9;
-    *((unsigned int *)(pbTargetCode)) = pbReplaced - (pbTargetCode +4);
-    VirtualProtect((void *) apiAddr, 5, dwOldProtect, NULL);
-    FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
-    return TRUE;
+	DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
+	if (apiAddr == NULL)
+		return FALSE;
+	BYTE *pbTargetCode = (BYTE *) apiAddr;
+	BYTE *pbReplaced = (BYTE *) addr;
+	VirtualProtect((void *) apiAddr, 5, PAGE_EXECUTE_READWRITE, &dwOldProtect);
+	memcpy(originalCode, pbTargetCode, 5);
+	*pbTargetCode++ = 0xE9;
+	*((unsigned int *)(pbTargetCode)) = pbReplaced - (pbTargetCode +4);
+	VirtualProtect((void *) apiAddr, 5, dwOldProtect, NULL);
+	FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
+	return TRUE;
 }
 
 BOOL uninstallHk(const char* dllName, const char* apiName, char *originalCode)
 {
 	DWORD dwOldProtect;
-    DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
-    if (apiAddr == NULL)
-        return FALSE;
-    BYTE *pbTargetCode = (BYTE *) apiAddr;
-    VirtualProtect((void *) apiAddr, 5, PAGE_EXECUTE_READWRITE, &dwOldProtect);
-    memcpy(pbTargetCode, originalCode, 5);
-    VirtualProtect((void *) apiAddr, 5, dwOldProtect, NULL);
-    FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
-    return TRUE;
-
+	DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
+	if (apiAddr == NULL)
+		return FALSE;
+	BYTE *pbTargetCode = (BYTE *) apiAddr;
+	VirtualProtect((void *) apiAddr, 5, PAGE_EXECUTE_READWRITE, &dwOldProtect);
+	memcpy(pbTargetCode, originalCode, 5);
+	VirtualProtect((void *) apiAddr, 5, dwOldProtect, NULL);
+	FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
+	return TRUE;
 }
 
 BOOL installHkThreadSafe(const char* dllName, const char* apiName, DWORD addr, char *originalCode)
 {
 	DWORD dwOldProtect;
-    DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
-    if (apiAddr == NULL)
-        return FALSE;
-    BYTE *pbTargetCode = (BYTE *) apiAddr - 5;
-    BYTE *pbReplaced = (BYTE *) addr;
-    VirtualProtect((void *) pbTargetCode, 7, PAGE_EXECUTE_READWRITE, &dwOldProtect);
-    memcpy(originalCode, pbTargetCode, 7);
-    *pbTargetCode++ = 0xE9;
-    *((unsigned int *)(pbTargetCode)) = pbReplaced - (pbTargetCode +4);
+	DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
+	if (apiAddr == NULL)
+		return FALSE;
+	BYTE *pbTargetCode = (BYTE *) apiAddr - 5;
+	BYTE *pbReplaced = (BYTE *) addr;
+	VirtualProtect((void *) pbTargetCode, 7, PAGE_EXECUTE_READWRITE, &dwOldProtect);
+	memcpy(originalCode, pbTargetCode, 7);
+	*pbTargetCode++ = 0xE9;
+	*((unsigned int *)(pbTargetCode)) = pbReplaced - (pbTargetCode +4);
 	pbTargetCode += 4;
 	*pbTargetCode++ = 0xEB;
 	*pbTargetCode = 0xF9;
-    VirtualProtect((void *) pbTargetCode, 7, dwOldProtect, NULL);
-    FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
-    return TRUE;
+	VirtualProtect((void *) pbTargetCode, 7, dwOldProtect, NULL);
+	FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
+	return TRUE;
 }
 
 BOOL uninstallHkThreadSafe(const char* dllName, const char* apiName, char *originalCode)
 {
 	DWORD dwOldProtect;
-    DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
-    if (apiAddr == NULL)
-        return FALSE;
-    BYTE *pbTargetCode = (BYTE *) apiAddr - 5;
-    VirtualProtect((void *) pbTargetCode, 7, PAGE_EXECUTE_READWRITE, &dwOldProtect);
-    memcpy(pbTargetCode, originalCode, 7);
-    VirtualProtect((void *) pbTargetCode, 7, dwOldProtect, NULL);
-    FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
-    return TRUE;
-
+	DWORD apiAddr = (DWORD)GetProcAddress(GetModuleHandleA(dllName), apiName);
+	if (apiAddr == NULL)
+		return FALSE;
+	BYTE *pbTargetCode = (BYTE *) apiAddr - 5;
+	VirtualProtect((void *) pbTargetCode, 7, PAGE_EXECUTE_READWRITE, &dwOldProtect);
+	memcpy(pbTargetCode, originalCode, 7);
+	VirtualProtect((void *) pbTargetCode, 7, dwOldProtect, NULL);
+	FlushInstructionCache(GetCurrentProcess(), NULL, NULL);
+	return TRUE;
 }
 
 BOOL WINAPI hkBitBlt(HDC hdc,int x, int y, int cx, int cy, HDC hdcSrc, int x1, int y1, DWORD rop)
